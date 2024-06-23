@@ -57,3 +57,14 @@ func (t *Task) Get(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, task)
 }
+
+func (t *Task) GetAll(c echo.Context) error {
+
+	tasks, err := t.service.FindAll()
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	return c.JSON(http.StatusOK, tasks)
+}

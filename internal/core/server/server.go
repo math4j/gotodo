@@ -5,8 +5,9 @@ import (
 	"log/slog"
 
 	"github.com/labstack/echo/v4"
+	"github.com/math4j/gotodo/internal/config"
 	"github.com/math4j/gotodo/internal/core/application"
-	"github.com/math4j/gotodo/internal/infra/repository/memory"
+	"github.com/math4j/gotodo/internal/infra/repository/mysql"
 )
 
 type Opt func(*Server)
@@ -42,13 +43,15 @@ func WithPort(port int) func(server *Server) {
 
 func (s *Server) Run() {
 
-	repository := memory.NewTaskRepository()
+	db := config.NewDB()
+	repository := mysql.NewTaskRepository(db)
 	health := application.NewHealth()
 	task := application.NewTask(repository)
 	app := echo.New()
 
 	app.GET("/api/v1/health", health.GetHealth)
 	app.GET("/api/v1/task", task.Get)
+	app.GET("/api/v1/tasks", task.GetAll)
 	app.POST("/api/v1/task", task.Create)
 
 	slog.Info(fmt.Sprintf("server starting at port %s", s.Addr))

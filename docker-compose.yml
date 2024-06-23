@@ -1,0 +1,16 @@
+services:
+  mysql:
+    container_name: mysql-todo
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=dba
+      - MYSQL_DATABASE=mydb
+      - MYSQL_PASS=dba
+    ports:
+      - "3306:3306"
+    volumes:
+      - myvol:/var/lib/mysql
+
+volumes:
+  myvol:

@@ -1,6 +1,8 @@
 package main
 
-import "github.com/math4j/gotodo/internal/core/server"
+import (
+	"github.com/math4j/gotodo/internal/core/server"
+)
 
 func main() {
 

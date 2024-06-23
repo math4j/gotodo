@@ -6,4 +6,5 @@ type TaskRepository interface {
 	Create(*model.Task) error
 	FindById(int64) (*model.Task, error)
 	DeleteById(int64) error
+	FindAll() ([]*model.Task, error)
 }
