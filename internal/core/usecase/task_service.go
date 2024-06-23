@@ -1,4 +1,4 @@
-package domain
+package usecase
 
 import (
 	"github.com/math4j/gotodo/internal/infra/model"

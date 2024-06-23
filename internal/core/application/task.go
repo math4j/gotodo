@@ -6,18 +6,18 @@ import (
 	"strconv"
 
 	"github.com/labstack/echo/v4"
-	"github.com/math4j/gotodo/internal/domain"
+	"github.com/math4j/gotodo/internal/core/usecase"
 	"github.com/math4j/gotodo/internal/infra/model"
 	"github.com/math4j/gotodo/internal/infra/repository"
 )
 
 type Task struct {
-	service *domain.TaskService
+	service *usecase.TaskService
 }
 
 func NewTask(repository repository.TaskRepository) *Task {
 
-	service := domain.NewTaskService(repository)
+	service := usecase.NewTaskService(repository)
 	return &Task{
 		service: service,
 	}
