@@ -77,5 +77,19 @@ func (r *TaskRepository) FindAll() ([]*model.Task, error) {
 
 func (r *TaskRepository) DeleteById(id int64) error {
 
+	stmt, err := r.db.Prepare("DELETE FROM tasks WHERE id = ?")
+
+	if err != nil {
+		slog.Error("could not prepare delete sql statement", "err", err.Error())
+		return err
+	}
+
+	_, err = stmt.Exec(id)
+
+	if err != nil {
+		slog.Error("could not execute sql query", "err", err.Error())
+		return err
+	}
+
 	return nil
 }

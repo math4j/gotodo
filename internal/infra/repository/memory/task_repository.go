@@ -35,6 +35,10 @@ func (r *TaskRepository) FindById(id int64) (*model.Task, error) {
 	return nil, errors.New("task not found")
 }
 
+func (r *TaskRepository) FindAll() ([]*model.Task, error) {
+	return r.tasks, nil
+}
+
 func (r *TaskRepository) DeleteById(id int64) error {
 
 	for index, task := range r.tasks {

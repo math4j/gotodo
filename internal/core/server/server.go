@@ -50,9 +50,11 @@ func (s *Server) Run() {
 	app := echo.New()
 
 	app.GET("/api/v1/health", health.GetHealth)
+
 	app.GET("/api/v1/task", task.Get)
-	app.GET("/api/v1/tasks", task.GetAll)
-	app.POST("/api/v1/task", task.Create)
+	app.GET("/api/v1/task/get-all", task.GetAll)
+	app.POST("/api/v1/task/create", task.Create)
+	app.DELETE("/api/v1/task/delete", task.Delete)
 
 	slog.Info(fmt.Sprintf("server starting at port %s", s.Addr))
 	app.Start(s.Addr)

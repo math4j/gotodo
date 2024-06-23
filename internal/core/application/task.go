@@ -2,6 +2,7 @@ package application
 
 import (
 	"encoding/json"
+	"log/slog"
 	"net/http"
 	"strconv"
 
@@ -60,6 +61,7 @@ func (t *Task) Get(c echo.Context) error {
 
 func (t *Task) GetAll(c echo.Context) error {
 
+	slog.Info("request received")
 	tasks, err := t.service.FindAll()
 
 	if err != nil {
@@ -67,4 +69,21 @@ func (t *Task) GetAll(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, tasks)
+}
+
+func (t *Task) Delete(c echo.Context) error {
+
+	id, err := strconv.ParseInt(c.QueryParam("taskId"), 10, 64)
+
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, nil)
+	}
+
+	err = t.service.DeleteById(id)
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, nil)
+	}
+
+	return c.JSON(http.StatusOK, nil)
 }
